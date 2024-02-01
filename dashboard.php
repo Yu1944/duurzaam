@@ -14,7 +14,6 @@ class Dashboard{
 
 <!DOCTYPE html>
 <html>
-<title>W3.CSS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -25,13 +24,13 @@ class Dashboard{
 <p> ik wel graag Hallo zeggen</p>
 <!-- Sidebar -->
 <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%">
-    <h3 class="w3-bar-item">Menu</h3>
+    <h3 class="w3-bar-item">KCD1ERD</h3>
     <a href="index.php?page=home" class="w3-bar-item w3-button">Website</a>
     <a href="#" class="w3-bar-item w3-button">Dashboard</a>
     <a href="#" class="w3-bar-item w3-button">Hoofdpagina</a>
     <a href="#" class="w3-bar-item w3-button">Persoonsgegevens</a>
     <a href="#" class="w3-bar-item w3-button">Klantgegevens</a>
-    <a href="#" class="w3-bar-item w3-button">Voorraadbeheer</a>
+    <a href="#" class="w3-bar-item w3-button">Voorraadbeheer</a> <!-- artikel, categorie, magazijnlocatie -->
     <a href="#" class="w3-bar-item w3-button">Opbrengst verkopen</a>
     <a href="#" class="w3-bar-item w3-button">Rit planning</a>
 </div>
@@ -49,9 +48,9 @@ class Dashboard{
     </div>
 
     <div style="padding-left:16px">
-        <h2>Responsive Search Bar</h2>
-        <p>Navigation bar with a search box and a submit button inside of it.</p>
-        <p>Resize the browser window to see the responsive effect.</p>
+        <?php
+
+        ?>
     </div>
 
 </div>
