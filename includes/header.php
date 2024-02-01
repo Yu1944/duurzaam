@@ -1,7 +1,7 @@
 <?php
 require_once 'functions.php';
 session_start();
-$dashboard = new crud_product();
+$planning = new crud_planning();
 $login = new login_system();
 ?>
 <!DOCTYPE html>
@@ -18,6 +18,7 @@ $login = new login_system();
         echo '<ul><li><a href="index.php?page=home">Home</a></li>';
         echo '<li><a href="index.php?page=dashboard">Dashboard</a></li>';
         echo '<li><a href="index.php?page=product">Product</a></li>';
+        echo '<li><a href="index.php?page=planning">planning</a></li>';
         if (isset($_SESSION['role']) && ($_SESSION['role'] === 'directie' || $_SESSION['role'] === 'winkelpersoneel')) {
             echo '<li><a href="index.php?page=register">register</a></li>';
         }
