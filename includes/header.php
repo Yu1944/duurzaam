@@ -2,6 +2,7 @@
 require_once 'functions.php';
 session_start();
 $dashboard = new crud_product();
+$login = new login_system();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,10 +13,19 @@ $dashboard = new crud_product();
     <title>Duurzaam</title>
 </head>
 <body>
-    <ul>
-        <li><a href="index.php?page=home">home</a></li>
-        <li><a href="index.php?page=product">producten</a></li>
-        <li><a href="index.php?page=login">login</a></li>
-    </ul>
+    <?php
+    if (isset($_SESSION['username'])) {
+        echo '<ul><li><a href="index.php?page=home">Home</a></li>';
+        echo '<li><a href="index.php?page=dashboard">Dashboard</a></li>';
+        echo '<li><a href="index.php?page=product">Product</a></li>';
+        if (isset($_SESSION['role']) && ($_SESSION['role'] === 'directie' || $_SESSION['role'] === 'winkelpersoneel')) {
+            echo '<li><a href="index.php?page=register">register</a></li>';
+        }
+        echo '<li>' . $_SESSION['username'] . '</li>';
+        echo '<li><a href="index.php?page=log_out">Loguit</a></li></ul>';
+    } else {
+        echo '<ul><li><a href="index.php?page=login">Login</a></li></ul>';
+    }
+    ?>
 </body>
 </html>
