@@ -1,5 +1,6 @@
 <?php 
 require_once 'db.php';
+require_once 'functions/function_login.php';
 
 class crud_product{
     private $conn;
