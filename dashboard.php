@@ -1,36 +1,61 @@
 <?php
 
+require_once 'functions.php';
+$dashboard = new crud_product();
+
 class Dashboard{
 
-    public function MenuItems(): Dashboard{
-        yield MenuItems::linktoRoute('Website', 'fas fa-backward', 'app_default');
-        yield MenuItems::linktoDashboard('Dashboard', 'fas fa-home');
-        yield MenuItems::linktohome('Hoofdpagina', 'fas fa-home');
-        yield MenuItems::linktoCrud('Persoonsgegevens', 'fas fa-list', gebruiker::class );
-        yield MenuItems::linktoCrud('Klantgegevens', 'fas fa-list', klant::class);
-        yield MenuItems::linktoCrud('Voorraadbeheer', 'fas fa-list', voorraad::class);
-        yield MenuItems::linktoCrud('Opbrengst verkopen', 'fas fa-list', verkopen::class);
-        yield MenuItems::linktoCrud('Rit planning', 'fas fa-list', planning::class);
-    
-    }
+    /* public function (): Dashboard{
+
+     }*/
 
 }
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+<title>Dashboard</title>
 <body>
-    <nav>
-        <li><a href="index.php?page=home">Website</a></li>
-        <li><a href="index.php?page=product">Dashboard</a></li>
-        <li><a href="index.php?page=login">login</a></li>
-        <li><a href="index.php?page=login">login</a></li>
-    </nav>
-    <h1>hallo</h1>
-    <p> ik wel graag weet waarom ik niks zie</p>
+<h1>hallo</h1>
+<p> ik wel graag Hallo zeggen</p>
+<!-- Sidebar -->
+<div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%">
+    <h3 class="w3-bar-item">Menu</h3>
+    <a href="index.php?page=home" class="w3-bar-item w3-button">Website</a>
+    <a href="#" class="w3-bar-item w3-button">Dashboard</a>
+    <a href="#" class="w3-bar-item w3-button">Hoofdpagina</a>
+    <a href="#" class="w3-bar-item w3-button">Persoonsgegevens</a>
+    <a href="#" class="w3-bar-item w3-button">Klantgegevens</a>
+    <a href="#" class="w3-bar-item w3-button">Voorraadbeheer</a>
+    <a href="#" class="w3-bar-item w3-button">Opbrengst verkopen</a>
+    <a href="#" class="w3-bar-item w3-button">Rit planning</a>
+</div>
+
+<!-- Page Content -->
+<div style="margin-left:15%">
+
+    <div class="topnav">
+        <div class="search-container">
+            <form action="/action_page.php">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <div style="padding-left:16px">
+        <h2>Responsive Search Bar</h2>
+        <p>Navigation bar with a search box and a submit button inside of it.</p>
+        <p>Resize the browser window to see the responsive effect.</p>
+    </div>
+
+</div>
+
+
 </body>
 </html>
