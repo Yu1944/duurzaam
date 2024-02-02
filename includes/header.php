@@ -19,7 +19,7 @@ $artikel= new crud_artikel();
     if (isset($_SESSION['username'])) {
         echo '<ul><li><a href="index.php?page=home">Home</a></li>';
         echo '<li><a href="index.php?page=dashboard">Dashboard</a></li>';
-        echo '<li><a href="index.php?page=product">Product</a></li>';
+        // echo '<li><a href="index.php?page=product">Product</a></li>';
         echo '<li><a href="index.php?page=categorie">categorie</a></li>';
         echo '<li><a href="index.php?page=planning">planning</a></li>';
         echo '<li><a href="index.php?page=artikel">artikel</a></li>';

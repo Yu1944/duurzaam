@@ -36,21 +36,21 @@ class crud_planning{
         echo "</tr>";
     // prints out the information to the planning
         foreach ($planningData as $data) {
-            echo "<tr>";
-            echo "<td>{$data->id}</td>";
-            echo "<td>{$data->kenteken}</td>";
-            echo "<td>{$data->ophalen_of_bezorgen}</td>";
-            echo "<td>{$data->afspraak_op}</td>";
-            echo "<td>{$data->naam}</td>";
-            echo "<td>{$data->prijs_ex_btw}</td>";
-            echo "<td>{$data->klant_naam}</td>";
-            echo "<td>{$data->adres}</td>";
-            echo "<td>{$data->plaats}</td>";
-            echo "<td>{$data->telefoon}</td>";
-            echo "<td>{$data->email}</td>";
-            echo "<td><a href='index.php?page=planning_delete&id={$data->id}&confirm=true'>Delete</a></td>";
-            echo "<td><a href='index.php?page=planning_edit&id={$data->id}'>Edit</a></td>";
-            echo "</tr>";
+            echo "<tr>
+            <td>{$data->id}</td>
+            <td>{$data->kenteken}</td>
+            <td>{$data->ophalen_of_bezorgen}</td>
+            <td>{$data->afspraak_op}</td>
+            <td>{$data->naam}</td>
+            <td>{$data->prijs_ex_btw}</td>
+            <td>{$data->klant_naam}</td>
+            <td>{$data->adres}</td>
+            <td>{$data->plaats}</td>
+            <td>{$data->telefoon}</td>
+            <td>{$data->email}</td>
+            <td><a href='index.php?page=planning_delete&id={$data->id}&confirm=true'>Delete</a></td>
+            <td><a href='index.php?page=planning_edit&id={$data->id}'>Edit</a></td>
+            </tr>";
         }
     
         echo "</table>";
