@@ -15,6 +15,7 @@ class login_system{
         $stmt->bindParam(':gebruikersnaam', $username);
         $stmt->execute();
         $users = $stmt->fetch(PDO::FETCH_OBJ);
+        //checks if the password matches with the password in the data
         if ($users && password_verify($password, $users->wachtwoord)) {
             $_SESSION['user_id'] = $users->id;
             $_SESSION['username'] = $users->gebruikersnaam;
@@ -27,6 +28,7 @@ class login_system{
     }
 
     public function register($username,$password,$roles, $is_geverifieerd){
+        //register the new information given and send to the database
         $stmt = $this->conn->prepare('INSERT INTO `gebruiker`(gebruikersnaam,wachtwoord,rollen,is_geverifieerd)VALUES(:gebruikersnaam,:wachtwoord,:rollen,:is_geverifieerd)');
         $stmt->bindparam(':gebruikersnaam',$username);
         $stmt->bindparam(':wachtwoord',$password);
@@ -42,7 +44,7 @@ class login_system{
     }
 
     public function logout_user() {
-        // Logout function
+        // Logout function to exit and end the sessions
         session_start();
         session_unset();
         session_destroy();

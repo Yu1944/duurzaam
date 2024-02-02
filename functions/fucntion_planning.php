@@ -54,46 +54,80 @@ class crud_planning{
         }
     
         echo "</table>";
+        echo "<td><a href='index.php?page=planning_add'>toevoeg nieuw product</a></td>";
     }
-    
 
-    public function add() {
+    public function add($kenteken, $ophalen_of_bezorgen, $afspraak_op, $artikel_id, $klant_id) {
         // Implementation for adding to the database
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            //Prepare sql to add into database
-            $stmt = $this->conn->prepare('INSERT INTO planning (name, description, quantity, price) VALUES (:name, :description, :quantity, :price);
-            ');
-            // Get values from the form and binds together with the database values
-            $stmt->bindParam(':name', $_POST['productName']);
-            $stmt->bindParam(':description', $_POST['description']);
-            $stmt->bindParam(':quantity', $_POST['quantity']);
-            $stmt->bindParam(':price', $_POST['price']);            
+            // Prepare SQL to add into the database
+            $stmt = $this->conn->prepare('INSERT INTO planning (kenteken, ophalen_of_bezorgen, afspraak_op, artikel_id, klant_id) VALUES (:kenteken, :ophalen_of_bezorgen, :afspraak_op, :artikel_id, :klant_id)');
+            
+            // Get values from the form and bind them to the database values
+            $stmt->bindParam(':kenteken', $kenteken);
+            $stmt->bindParam(':ophalen_of_bezorgen', $ophalen_of_bezorgen);
+            $stmt->bindParam(':afspraak_op', $afspraak_op);
+            $stmt->bindParam(':artikel_id', $artikel_id);
+            $stmt->bindParam(':klant_id', $klant_id);
+    
+            // Execute the statement
             $stmt->execute();
-            // after succesfully added reloads the page to overcome double insert
+    
+            // After successfully added, reload the page to prevent double insert
             header('location: index.php?page=planning');
             exit();
         }
     }
+    
+
+    public function add_selection() {
+        
+        $stmt1 = $this->conn->prepare('SELECT 
+        `artikel`.`id` as `product_id`,
+        `artikel`.`naam` as `product_name`
+        FROM 
+        `artikel`');
+
+        // Fetch results from the first query
+        $stmt1->execute();
+        $result1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+
+        // Get distinct klant information
+        $stmt2 = $this->conn->prepare('SELECT 
+            `klant`.`id` as `klant_id`,
+            `klant`.`naam` as `klant_name`
+            FROM 
+            `klant`');
+
+        // Fetch results from the second query
+        $stmt2->execute();
+        $result2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+        return array('artikel' => $result1, 'klant' => $result2);
+    }
+    
+
 
     public function edit($id, $kenteken, $ophalen_of_bezorgen, $afspraak_op, $naam, $prijs_ex_btw, $klant_naam, $adres, $plaats, $telefoon, $email) {
         // Implementation for editing in the database
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             try {
-                $stmt = $this->conn->prepare('UPDATE `planning`
-                                            JOIN `artikel` ON `planning`.`artikel_id` = `artikel`.`id`
-                                            JOIN `klant` ON `planning`.`klant_id` = `klant`.`id`
-                                            SET `planning`.`kenteken` = :kenteken, 
-                                                `planning`.`ophalen_of_bezorgen` = :ophalen_of_bezorgen, 
-                                                `planning`.`afspraak_op` = :afspraak_op, 
-                                                `artikel`.`naam` = :naam, 
-                                                `artikel`.`prijs_ex_btw` = :prijs_ex_btw, 
-                                                `klant`.`naam` = :klant_naam,
-                                                `klant`.`adres` = :adres,
-                                                `klant`.`plaats` = :plaats,
-                                                `klant`.`telefoon` = :telefoon,
-                                                `klant`.`email` = :email 
-                                            WHERE `planning`.`id` = :id');
-                
+                $stmt = $this->conn->prepare('UPDATE `planning` 
+                JOIN `artikel` ON `planning`.`artikel_id` = `artikel`.`id` 
+                JOIN `klant` ON `planning`.`klant_id` = `klant`.`id` 
+                SET 
+                    `planning`.`kenteken` = :kenteken, 
+                    `planning`.`ophalen_of_bezorgen` = :ophalen_of_bezorgen, 
+                    `planning`.`afspraak_op` = :afspraak_op, 
+                    `artikel`.`naam` = :naam,
+                    `artikel`.`prijs_ex_btw` = :prijs_ex_btw, 
+                    `klant`.`naam` = :klant_naam,
+                    `klant`.`adres` = :adres,
+                    `klant`.`plaats` = :plaats,
+                    `klant`.`telefoon` = :telefoon,
+                    `klant`.`email` = :email 
+                WHERE `planning`.`id` = :id;
+                ');
+                //binds the information given by the $_POST in the planning_edit page
                 $stmt->bindParam(':id', $id);
                 $stmt->bindParam(':kenteken', $kenteken);
                 $stmt->bindParam(':ophalen_of_bezorgen', $ophalen_of_bezorgen);
@@ -119,6 +153,7 @@ class crud_planning{
     
 
     public function fetch_info_for_edit($id){
+        // fills in the information to be edited in the planning_edit page
         $stmt = $this->conn->prepare('SELECT 
         `planning`.id, 
         `planning`.kenteken, 
@@ -144,6 +179,7 @@ class crud_planning{
         $stmt->execute();
         $planning = $stmt->fetch(PDO::FETCH_OBJ);
     
+        //prints out into the form to be edited
         echo '<form action="" method="post">
         <!-- Planning ID (hidden) -->
         <input type="hidden" name="planning_id" value="' . $planning->id . '"><br>
@@ -154,7 +190,11 @@ class crud_planning{
 
         <!-- Ophalen/Bezorgen -->
         <label for="ophalen_of_bezorgen">Ophalen/Bezorgen:</label>
-        <input type="text" id="ophalen_of_bezorgen" name="ophalen_of_bezorgen" required value="' . $planning->ophalen_of_bezorgen . '"><br>
+        <select name="ophalen_of_bezorgen" id="ophalen_of_bezorgen" required>
+            <option value="ophalen">ophalen</option>
+            <option value="bezorgen">bezorgen</option>
+        </select>
+        <br>
 
         <!-- Afspraak Op -->
         <label for="afspraak_op">Afspraak Op:</label>
@@ -185,8 +225,8 @@ class crud_planning{
         <input type="text" id="phone" name="phone" required value="' . $planning->customer_phone . '"><br>
 
         <!-- Customer Email -->
-        <label for="customer_email">Customer Email:</label>
-        <input type="text" id="customer_email" name="customer_email" required value="' . $planning->customer_email . '"><br>
+        <label for="email">Customer Email:</label>
+        <input type="email" id="email" name="email" required value="' . $planning->customer_email . '"><br>
 
         <!-- Submit Button -->
         <button type="submit" name="edit_submit">Edit Planning</button>
@@ -195,7 +235,7 @@ class crud_planning{
     }
     
     public function delete($id) {
-        // Implementation for deleting from the database
+        // Implementation for deleting from the database to be deleted
         $stmt = $this->conn->prepare('DELETE FROM `planning` WHERE `planning`.`id` = :id');
         $stmt->bindParam(':id', $id);
         $stmt->execute();
