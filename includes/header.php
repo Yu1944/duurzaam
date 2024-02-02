@@ -2,6 +2,7 @@
 require_once 'functions.php';
 session_start();
 $planning = new crud_planning();
+$categorie = new categorie();
 $login = new login_system();
 $artikel= new crud_artikel();
 ?>
@@ -19,6 +20,7 @@ $artikel= new crud_artikel();
         echo '<ul><li><a href="index.php?page=home">Home</a></li>';
         echo '<li><a href="index.php?page=dashboard">Dashboard</a></li>';
         echo '<li><a href="index.php?page=product">Product</a></li>';
+        echo '<li><a href="index.php?page=categorie">categorie</a></li>';
         echo '<li><a href="index.php?page=planning">planning</a></li>';
         echo '<li><a href="index.php?page=artikel">artikel</a></li>';
         if (isset($_SESSION['role']) && ($_SESSION['role'] === 'directie' || $_SESSION['role'] === 'winkelpersoneel')) {
